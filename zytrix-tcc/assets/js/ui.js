@@ -40,6 +40,15 @@ const cartIcon = `
 
 export function header(active = '') {
   ensureFigmaStyles();
+  if (!document.documentElement.dataset.zytrixImageFallback) {
+    document.documentElement.dataset.zytrixImageFallback = 'true';
+    document.addEventListener('error', event => {
+      const image = event.target;
+      if (image instanceof HTMLImageElement && image.matches('.figma-live-thumb img')) {
+        image.hidden = true;
+      }
+    }, true);
+  }
   const element = document.querySelector('[data-header]');
   if (!element) return;
 
