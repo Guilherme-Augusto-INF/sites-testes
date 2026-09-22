@@ -1,7 +1,8 @@
-import { header, footer, categories, icons } from './ui.js';
+import { header, footer, categories, icons, authGate } from './ui.js';
 
 header('categorias');
 footer();
+authGate('Faça login para acessar a aba Categorias');
 
 const grid = document.querySelector('#categories-grid');
 const order = Object.keys(categories);

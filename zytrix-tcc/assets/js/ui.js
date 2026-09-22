@@ -1,10 +1,20 @@
 import { auth, onAuthStateChanged } from './firebase.js';
 
-const searchIcon = `
+export const interfaceIcons = {
+  search: `
 <svg viewBox="0 0 24 24" aria-hidden="true">
   <circle cx="11" cy="11" r="6.5"></circle>
   <path d="M16 16l5 5"></path>
-</svg>`;
+</svg>`,
+  play: `
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="M9 7.2v9.6L17 12 9 7.2Z" fill="currentColor" stroke="none"></path>
+</svg>`,
+  check: `
+<svg viewBox="0 0 24 24" aria-hidden="true">
+  <path d="m6.5 12.5 3.2 3.2 7.8-8"></path>
+</svg>`
+};
 
 function ensureFigmaStyles() {
   if (document.querySelector('link[data-zytrix-figma-style]')) return;
@@ -50,7 +60,7 @@ export function header(active = '') {
 
         <div class="nav-actions figma-nav-actions">
           <a class="figma-icon-button" href="ao-vivo.html" title="Pesquisar" aria-label="Pesquisar na Zytrix">
-            ${searchIcon}
+            ${interfaceIcons.search}
           </a>
 
           <a id="store-nav" class="figma-icon-button figma-cart hidden" href="loja.html" title="Loja" aria-label="Abrir loja">
@@ -75,6 +85,8 @@ export function header(active = '') {
     if (!guest || !profile || !store) return;
 
     const signedIn = Boolean(user);
+    document.body.classList.toggle('is-authenticated', signedIn);
+    document.body.classList.toggle('is-guest', !signedIn);
     guest.classList.toggle('hidden', signedIn);
     profile.classList.toggle('hidden', !signedIn);
     store.classList.toggle('hidden', !signedIn);
@@ -120,7 +132,7 @@ export function liveCard(live, options = {}) {
 
         <span class="figma-live-badge"><i></i> AO VIVO</span>
         <span class="figma-live-viewers">● ${formatViewers(live.viewerCount)} ESPECTADORES</span>
-        <span class="figma-live-play">${selected ? '✓' : '▶'}</span>
+        <span class="figma-live-play">${selected ? interfaceIcons.check : interfaceIcons.play}</span>
       </div>
 
       <div class="figma-live-meta">
@@ -171,12 +183,46 @@ export const categories = {
 };
 
 export const icons = {
-  Gaming: '🎮',
-  Música: '🎵',
-  'Just Chatting': '🎙️',
-  Criatividade: '🎨',
-  Esportes: '⚽',
-  Tecnologia: '💻',
-  Podcasts: '🎧',
-  IRL: '🎥'
+  Gaming: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.2 8.2h9.6a4 4 0 0 1 3.8 5.1l-1.2 4a2 2 0 0 1-3.2 1l-2.1-1.7H9.9l-2.1 1.7a2 2 0 0 1-3.2-1l-1.2-4a4 4 0 0 1 3.8-5.1Z"></path><path d="M7.3 11v4M5.3 13h4M15.8 12.2h.1M18 14h.1"></path></svg>',
+  Música: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V6l10-2v12"></path><ellipse cx="6.5" cy="18" rx="2.5" ry="2"></ellipse><ellipse cx="16.5" cy="16" rx="2.5" ry="2"></ellipse><path d="M9 9l10-2"></path></svg>',
+  'Just Chatting': '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="3" width="8" height="12" rx="4"></rect><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"></path></svg>',
+  Criatividade: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18h1.5a2 2 0 0 0 0-4H12a1.8 1.8 0 0 1 0-3.6h3.2A5.8 5.8 0 0 0 21 7.6C19.3 4.8 16.2 3 12 3Z"></path><circle cx="7.5" cy="10" r="1"></circle><circle cx="10" cy="6.8" r="1"></circle><circle cx="14.2" cy="6.8" r="1"></circle><circle cx="17" cy="10" r="1"></circle></svg>',
+  Esportes: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="m12 7 3 2.2-1.1 3.5h-3.8L9 9.2 12 7ZM5.5 9l3.5.2M15 9.2 18.5 9M7 17l3.1-4.3M13.9 12.7 17 17M9 20l-2-3M15 20l2-3"></path></svg>',
+  Tecnologia: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="11" rx="1.5"></rect><path d="M2.5 19h19M8 19l1-4h6l1 4"></path></svg>',
+  Podcasts: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13v-2a7 7 0 0 1 14 0v2M5 13a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v-7H5ZM19 13a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2v-7h2Z"></path></svg>',
+  IRL: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="14" height="11" rx="2"></rect><path d="m17 11 4-2v7l-4-2M7 7l1-3h4l1 3M7 12h6"></path></svg>'
 };
+
+export function authGate(message) {
+  const main = document.querySelector('main');
+  if (!main) return () => {};
+
+  let overlay = document.querySelector('#figma-auth-gate');
+  if (!overlay) {
+    const current = `${location.pathname.split('/').pop() || 'index.html'}${location.search}`;
+    const redirect = encodeURIComponent(current);
+    overlay = document.createElement('section');
+    overlay.id = 'figma-auth-gate';
+    overlay.className = 'figma-auth-gate hidden';
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'figma-auth-gate-title');
+    overlay.innerHTML = `
+      <div class="figma-auth-gate-card">
+        <p id="figma-auth-gate-title">${escapeHtml(message)}</p>
+        <div class="figma-auth-gate-actions">
+          <a class="figma-btn figma-btn-dark" href="login.html?redirect=${redirect}">Entrar</a>
+          <span>OU</span>
+          <a class="figma-btn figma-btn-primary" href="registro.html?redirect=${redirect}">Registrar</a>
+        </div>
+      </div>`;
+    main.insertAdjacentElement('afterend', overlay);
+  }
+
+  return onAuthStateChanged(auth, user => {
+    const blocked = !user;
+    document.body.classList.toggle('figma-auth-blocked', blocked);
+    overlay.classList.toggle('hidden', !blocked);
+    main.setAttribute('aria-hidden', blocked ? 'true' : 'false');
+  });
+}

@@ -11,6 +11,7 @@ import {
   mainCategory
 } from './firebase.js';
 import { header, footer, liveCard, categories, icons } from './ui.js';
+import { splitHomeLives } from './live-ranking.js';
 
 header('inicio');
 footer();
@@ -47,13 +48,6 @@ filterWrap.innerHTML = ['Todos', ...categoryItems].map(category => `
   </button>
 `).join('');
 
-function sortLives(items) {
-  return [...items].sort((a, b) => {
-    const viewers = Number(b.viewerCount || 0) - Number(a.viewerCount || 0);
-    return viewers || String(a.id).localeCompare(String(b.id));
-  });
-}
-
 function setSelected(live) {
   selectedId = live.id;
   selectStream(live);
@@ -71,9 +65,7 @@ function cardMatches(live) {
 }
 
 function render() {
-  const ordered = sortLives(lives);
-  const top3 = ordered.slice(0, 3);
-  const positions4to7 = ordered.slice(3, 7);
+  const { ordered, featured: top3, liveNow: positions4to7 } = splitHomeLives(lives);
 
   const hasLives = ordered.length > 0;
   emptyActions.classList.toggle('hidden', hasLives);

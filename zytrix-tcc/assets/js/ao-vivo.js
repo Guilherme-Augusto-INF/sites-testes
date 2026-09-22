@@ -1,5 +1,7 @@
 import {
+  auth,
   db,
+  onAuthStateChanged,
   collection,
   query,
   where,
@@ -9,15 +11,17 @@ import {
   normalize,
   mainCategory
 } from './firebase.js';
-import { header, footer, liveCard, icons } from './ui.js';
+import { header, footer, liveCard, icons, authGate } from './ui.js';
 
 header('ao-vivo');
 footer();
+authGate('Faça login para acessar a aba Ao Vivo');
 
 let lives = [];
 let filter = 'todos';
 let search = '';
 let selectedId = localStorage.getItem('zytrixSelectedStream') || '';
+let stopLives = null;
 
 const grid = document.querySelector('#lives-grid');
 const filters = document.querySelector('#filters');
@@ -101,9 +105,11 @@ function render() {
   });
 }
 
-onSnapshot(
-  query(collection(db, 'streams'), where('status', '==', 'live')),
-  async snapshot => {
+function startLives() {
+  stopLives?.();
+  stopLives = onSnapshot(
+    query(collection(db, 'streams'), where('status', '==', 'live')),
+    async snapshot => {
     const base = snapshot.docs
       .map(item => ({
         id: item.id,
@@ -128,8 +134,22 @@ onSnapshot(
     }));
 
     render();
-  },
-  () => {
-    grid.innerHTML = '<div class="figma-state live-browser-empty"><strong>Não foi possível carregar as transmissões.</strong></div>';
+    },
+    () => {
+      grid.innerHTML = '<div class="figma-state live-browser-empty"><strong>Não foi possível carregar as transmissões.</strong></div>';
+    }
+  );
+}
+
+onAuthStateChanged(auth, user => {
+  if (user) {
+    startLives();
+  } else {
+    stopLives?.();
+    stopLives = null;
+    lives = [];
+    render();
   }
-);
+});
+
+window.addEventListener('pagehide', () => stopLives?.());
