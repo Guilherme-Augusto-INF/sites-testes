@@ -19,7 +19,7 @@ export async function ensureWallet(uid) {
     const ref = doc(db, 'wallets', uid);
     const snap = await getDoc(ref);
     if (!snap.exists()) {
-        await setDoc(ref, { uid, balance: 500, totalSent: 0, totalReceived: 0, lastTransactionId: '', createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
+        await setDoc(ref, { uid, balance: 0, totalSent: 0, totalReceived: 0, lastTransactionId: '', createdAt: serverTimestamp(), updatedAt: serverTimestamp() });
     }
     return ref;
 }
