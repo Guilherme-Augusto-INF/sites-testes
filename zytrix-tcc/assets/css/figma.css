@@ -345,6 +345,10 @@ body.figma-page {
   object-fit: cover;
 }
 
+.figma-live-thumb > img[hidden] {
+  display: none;
+}
+
 .figma-live-placeholder {
   display: grid;
   place-content: center;
