@@ -28,7 +28,7 @@ let pack = null;
 if (raw) {
   try {
     const parsed = JSON.parse(raw);
-    pack = packages.find(item => item.id === parsed?.id) || parsed;
+    pack = packages.find(item => item.id === parsed?.id) || null;
   } catch {
     pack = packages.find(item => item.id === raw) || null;
   }
