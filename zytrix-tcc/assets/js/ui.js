@@ -6,6 +6,21 @@ const searchIcon = `
   <path d="M16 16l5 5"></path>
 </svg>`;
 
+function ensureFigmaStyles() {
+  if (document.querySelector('link[data-zytrix-figma-style]')) return;
+  const existing = [...document.styleSheets].some(sheet => {
+    try { return String(sheet.href || '').includes('/assets/css/figma.css') || String(sheet.href || '').endsWith('assets/css/figma.css'); }
+    catch { return false; }
+  });
+  if (existing) return;
+
+  const stylesheet = document.createElement('link');
+  stylesheet.rel = 'stylesheet';
+  stylesheet.href = 'assets/css/figma.css';
+  stylesheet.dataset.zytrixFigmaStyle = 'true';
+  document.head.append(stylesheet);
+}
+
 const cartIcon = `
 <svg viewBox="0 0 24 24" aria-hidden="true">
   <path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L20.2 8H6.1"></path>
@@ -14,6 +29,7 @@ const cartIcon = `
 </svg>`;
 
 export function header(active = '') {
+  ensureFigmaStyles();
   const element = document.querySelector('[data-header]');
   if (!element) return;
 
@@ -66,6 +82,7 @@ export function header(active = '') {
 }
 
 export function footer() {
+  ensureFigmaStyles();
   const element = document.querySelector('[data-footer]');
   if (!element) return;
 

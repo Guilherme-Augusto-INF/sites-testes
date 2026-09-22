@@ -33,7 +33,7 @@ let stopLives = null;
 
 const categoryItems = Object.keys(categories);
 
-categoryStrip.innerHTML = categoryItems.map(category => `
+categoryStrip.innerHTML = categoryItems.slice(0, 5).map(category => `
   <a class="home-category-card" href="categoria.html?categoria=${encodeURIComponent(category)}">
     <span class="home-category-icon">${icons[category]}</span>
     <strong>${category}</strong>
@@ -79,6 +79,7 @@ function render() {
   emptyActions.classList.toggle('hidden', hasLives);
   categorySection.classList.toggle('hidden', hasLives);
   liveControls.classList.toggle('hidden', !hasLives);
+  watchButton.parentElement?.classList.toggle('hidden', !hasLives);
 
   featured.innerHTML = top3.length
     ? top3.map(item => liveCard(item, { selected: item.id === selectedId })).join('')
