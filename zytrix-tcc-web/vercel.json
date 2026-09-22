@@ -1,0 +1,33 @@
+{
+  "$schema":"https://openapi.vercel.sh/vercel.json",
+  "cleanUrls":true,
+  "trailingSlash":false,
+  "rewrites":[
+    {"source":"/ao-vivo","destination":"/index.html"},
+    {"source":"/categorias","destination":"/index.html"},
+    {"source":"/categoria/:path*","destination":"/index.html"},
+    {"source":"/sobre","destination":"/index.html"},
+    {"source":"/login","destination":"/index.html"},
+    {"source":"/registro","destination":"/index.html"},
+    {"source":"/recuperar-senha","destination":"/index.html"},
+    {"source":"/live","destination":"/index.html"},
+    {"source":"/loja","destination":"/index.html"},
+    {"source":"/pagamento","destination":"/index.html"},
+    {"source":"/perfil","destination":"/index.html"},
+    {"source":"/config-live","destination":"/index.html"},
+    {"source":"/sair","destination":"/index.html"}
+  ],
+  "headers":[
+    {
+      "source":"/(.*)",
+      "headers":[
+        {"key":"X-Content-Type-Options","value":"nosniff"},
+        {"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},
+        {"key":"X-Frame-Options","value":"DENY"},
+        {"key":"Cross-Origin-Opener-Policy","value":"same-origin-allow-popups"},
+        {"key":"Permissions-Policy","value":"camera=(), microphone=(), geolocation=()"},
+        {"key":"Content-Security-Policy","value":"default-src 'self'; script-src 'self' https://www.gstatic.com https://apis.google.com https://accounts.google.com; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com https://accounts.google.com https://zytrix-ca4f2.firebaseapp.com wss://*.firebaseio.com; img-src 'self' data: blob: https:; frame-src https://zytrix-ca4f2.firebaseapp.com https://player.twitch.tv https://*.twitch.tv https://www.youtube.com https://youtube.com https://player.kick.com https://*.kick.com https://accounts.google.com; worker-src 'self' blob:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"}
+      ]
+    }
+  ]
+}
