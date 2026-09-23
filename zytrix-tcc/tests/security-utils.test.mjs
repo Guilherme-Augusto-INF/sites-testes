@@ -39,9 +39,10 @@ test('imagens ficam limitadas a CDNs conhecidas', () => {
   assert.equal(safeImageUrl('https://tracker.example/pixel.png'), '');
 });
 
-test('senha local exige ao menos 10 caracteres, letra e número', () => {
+test('senha local exige ao menos 8 caracteres, letra e número', () => {
   assert.equal(strongPassword('1234567890'), false);
   assert.equal(strongPassword('abcdefghij'), false);
   assert.equal(strongPassword('abc123'), false);
+  assert.equal(strongPassword('abc12345'), true);
   assert.equal(strongPassword('Zytrix2026!'), true);
 });

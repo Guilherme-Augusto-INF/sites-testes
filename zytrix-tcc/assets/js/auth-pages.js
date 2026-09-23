@@ -49,7 +49,7 @@ form?.addEventListener('submit', async (e) => {
             if (name.length < 2)
                 throw new Error('Nome muito curto.');
             if (!strongPassword(password))
-                throw new Error('Use pelo menos 10 caracteres, com letra e número.');
+                throw new Error('Use pelo menos 8 caracteres, com letra e número.');
             const cred = await createUserWithEmailAndPassword(auth, email, password);
             await ensureDocs(cred.user, name, 'password');
             await sendEmailVerification(cred.user);
@@ -63,7 +63,7 @@ form?.addEventListener('submit', async (e) => {
     }
     catch (err) {
         console.warn('Falha na autenticação.', err?.code || err?.name || 'unknown');
-        if (mode === 'register' && ['Nome muito curto.', 'Use pelo menos 10 caracteres, com letra e número.'].includes(err?.message)) show(err.message);
+        if (mode === 'register' && ['Nome muito curto.', 'Use pelo menos 8 caracteres, com letra e número.'].includes(err?.message)) show(err.message);
         else if (mode === 'reset') show('Se existir uma conta para esse e-mail, enviaremos as instruções de recuperação.', 'ok');
         else show(genericAuthMessage());
     }

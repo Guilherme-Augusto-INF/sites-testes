@@ -113,7 +113,7 @@ export function genericAuthMessage() {
 
 export function strongPassword(value = '') {
   const password = String(value);
-  return password.length >= 10 && /[A-Za-zÀ-ÿ]/.test(password) && /\d/.test(password);
+  return password.length >= 8 && /[A-Za-zÀ-ÿ]/.test(password) && /\d/.test(password);
 }
 
 export const SECURITY_LIMITS = Object.freeze({
