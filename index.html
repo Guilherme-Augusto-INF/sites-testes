@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Barbearia Brasa — cortes clássicos, barba e acabamento com hora marcada.">
+  <title>Barbearia Brasa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Barbearia Brasa, início">
+      <span class="brand-mark" aria-hidden="true">B</span>
+      <span>BARBEARIA <strong>BRASA</strong></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false">Menu</button>
+    <nav class="nav" aria-label="Navegação principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#metodo">Método</a>
+      <a href="#agenda">Agenda</a>
+    </nav>
+    <a class="header-cta" href="#agenda">Marcar horário</a>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <p class="kicker">CORTE PRECISO · BARBA BEM FEITA</p>
+        <h1>Seu visual,<br><em>sem improviso.</em></h1>
+        <p class="hero-text">Uma barbearia direta ao ponto: técnica, acabamento e atenção aos detalhes do primeiro fio ao último.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#agenda">Agendar agora</a>
+          <a class="text-link" href="#servicos">Ver serviços <span aria-hidden="true">↘</span></a>
+        </div>
+        <div class="hero-stats" aria-label="Destaques">
+          <div><strong>45 min</strong><span>corte completo</span></div>
+          <div><strong>3 etapas</strong><span>consulta, corte, acabamento</span></div>
+          <div><strong>100%</strong><span>hora marcada</span></div>
+        </div>
+      </div>
+
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="blade blade-a"></div>
+        <div class="blade blade-b"></div>
+        <div class="badge">
+          <span>DESDE</span>
+          <strong>2026</strong>
+          <small>CORTE COM IDENTIDADE</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="services section" id="servicos">
+      <div class="section-heading">
+        <p class="kicker">SERVIÇOS</p>
+        <h2>O essencial, <em>muito bem feito.</em></h2>
+      </div>
+
+      <div class="service-list">
+        <article class="service-row">
+          <span class="service-number">01</span>
+          <div><h3>Corte</h3><p>Tesoura, máquina e acabamento pensado para o seu tipo de cabelo.</p></div>
+          <strong>R$ 45</strong>
+        </article>
+        <article class="service-row">
+          <span class="service-number">02</span>
+          <div><h3>Barba</h3><p>Desenho, alinhamento e finalização para deixar o contorno limpo.</p></div>
+          <strong>R$ 35</strong>
+        </article>
+        <article class="service-row">
+          <span class="service-number">03</span>
+          <div><h3>Combo Brasa</h3><p>Corte + barba em uma sessão completa, sem pressa e sem atalhos.</p></div>
+          <strong>R$ 70</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="method section" id="metodo">
+      <div class="method-title">
+        <p class="kicker">NOSSO MÉTODO</p>
+        <h2>Bom corte começa <em>antes da máquina.</em></h2>
+      </div>
+      <div class="method-steps">
+        <div><span>01</span><h3>Leitura</h3><p>Entendemos seu cabelo, rotina e o resultado que você quer manter no dia a dia.</p></div>
+        <div><span>02</span><h3>Execução</h3><p>Construímos o formato com técnica e conferência constante de proporção.</p></div>
+        <div><span>03</span><h3>Acabamento</h3><p>Refinamos linhas, textura e detalhes para o corte continuar funcionando depois.</p></div>
+      </div>
+    </section>
+
+    <section class="booking section" id="agenda">
+      <div class="booking-copy">
+        <p class="kicker">AGENDA</p>
+        <h2>Escolha o serviço.<br><em>O resto é com a gente.</em></h2>
+        <p>Este protótipo confirma o pedido de horário na própria página. Nenhum dado é enviado para servidor.</p>
+      </div>
+
+      <form class="booking-form" id="booking-form">
+        <label>
+          Nome
+          <input name="nome" autocomplete="name" required placeholder="Seu nome">
+        </label>
+        <label>
+          Serviço
+          <select name="servico" required>
+            <option value="">Selecione</option>
+            <option>Corte — R$ 45</option>
+            <option>Barba — R$ 35</option>
+            <option>Combo Brasa — R$ 70</option>
+          </select>
+        </label>
+        <div class="form-row">
+          <label>
+            Dia
+            <input type="date" name="dia" required>
+          </label>
+          <label>
+            Horário
+            <select name="horario" required>
+              <option value="">Selecione</option>
+              <option>09:00</option>
+              <option>10:30</option>
+              <option>13:30</option>
+              <option>15:00</option>
+              <option>16:30</option>
+              <option>18:00</option>
+            </select>
+          </label>
+        </div>
+        <button class="btn btn-dark" type="submit">Confirmar pedido</button>
+        <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#inicio"><span class="brand-mark">B</span><span>BARBEARIA <strong>BRASA</strong></span></a>
+    <p>Corte com técnica. Atendimento com hora marcada.</p>
+    <a href="#inicio">Voltar ao topo ↑</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
