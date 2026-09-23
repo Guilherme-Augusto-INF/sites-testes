@@ -100,3 +100,4 @@ form.addEventListener("submit",event=>{
     feedback.textContent=`Certo, ${nome}. Pedido anotado para ${dataFormatada}, às ${data.get("horario")}: ${data.get("servico")}.`;
   });
 });
+
