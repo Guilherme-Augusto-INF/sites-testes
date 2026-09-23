@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Barbearia Imperial — serviços, equipe e pedido de horário pelo WhatsApp.">
+  <meta name="theme-color" content="#ece4d6">
+  <title>Barbearia Imperial</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Barbearia Imperial, início"><span class="brand-mark">I</span><span>IMPERIAL</span></a>
+    <nav class="desktop-nav" aria-label="Navegação principal"><a href="#casa">A casa</a><a href="#servicos">Serviços</a><a href="#equipe">Equipe</a><a href="#agenda">Agenda</a></nav>
+    <a class="book-top pressable" href="#agenda">Escolher horário</a>
+    <button class="menu-toggle pressable" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Abrir menu"><span></span><span></span></button>
+    <nav class="mobile-nav" id="mobile-nav" aria-label="Navegação móvel"><a href="#casa">A casa</a><a href="#servicos">Serviços</a><a href="#equipe">Equipe</a><a href="#agenda">Agenda</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>Cabelo cresce.<br><em>Estilo se constrói.</em></h1>
+        <p>Uma barbearia de bairro com obsessão por bom corte, conversa honesta e horário respeitado.</p>
+        <a class="hero-cta pressable" href="#agenda">Escolher meu horário <span>→</span></a>
+      </div>
+      <figure class="hero-media">
+        <img src="https://barbearia-imperial-premium.vercel.app/assets/hero.jpg" alt="Interior da Barbearia Imperial">
+        <figcaption>Ambiente demonstrativo — substitua pela fotografia real do cliente.</figcaption>
+      </figure>
+      <aside class="hero-card"><span>IMPERIAL</span><strong>corte com<br>intenção</strong><small>barba · cabelo · acabamento</small></aside>
+    </section>
+
+    <section class="story section" id="casa">
+      <div class="story-heading reveal">
+        <h2>Uma casa que entende <em>antes de cortar.</em></h2>
+        <p>O site deve mostrar como a barbearia trabalha, não só listar preço. A proposta é deixar o cliente chegar mais decidido e com menos dúvida.</p>
+      </div>
+      <div class="story-grid">
+        <figure class="story-image reveal"><img src="https://barbearia-imperial-premium.vercel.app/assets/cut.jpg" alt="Detalhe de um corte sendo realizado"></figure>
+        <div class="story-copy reveal">
+          <p>Todo atendimento começa por formato, textura e rotina. A ideia não é empurrar tendência: é encontrar um corte que faça sentido fora da cadeira também.</p>
+          <p>Na versão final do cliente, textos, endereço, equipe, horários, preços e fotografias devem refletir apenas informações confirmadas.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="services section" id="servicos">
+      <div class="services-head reveal"><h2>Sem nome difícil.<br><em>Sem preço escondido.</em></h2><p>Escolha um serviço e ele já entra no seu pedido de horário.</p></div>
+      <div class="service-list">
+        <article class="service reveal" data-service="Corte assinatura" data-price="R$ 65" data-duration="45 min"><div><h3>Corte assinatura</h3><p>Consultoria rápida, corte personalizado e finalização.</p></div><span>45 min</span><strong>R$ 65</strong><button class="choose-service pressable" type="button">Escolher</button></article>
+        <article class="service reveal" data-service="Barba imperial" data-price="R$ 50" data-duration="35 min"><div><h3>Barba imperial</h3><p>Desenho, toalha quente, navalha e hidratação.</p></div><span>35 min</span><strong>R$ 50</strong><button class="choose-service pressable" type="button">Escolher</button></article>
+        <article class="service reveal" data-service="Corte + barba" data-price="R$ 105" data-duration="75 min"><div><h3>Corte + barba</h3><p>A experiência completa para cabelo e barba.</p></div><span>75 min</span><strong>R$ 105</strong><button class="choose-service pressable" type="button">Escolher</button></article>
+        <article class="service reveal" data-service="Camuflagem" data-price="R$ 55" data-duration="30 min"><div><h3>Camuflagem</h3><p>Disfarce natural de fios brancos na barba ou cabelo.</p></div><span>30 min</span><strong>R$ 55</strong><button class="choose-service pressable" type="button">Escolher</button></article>
+        <article class="service reveal" data-service="Corte infantil" data-price="R$ 55" data-duration="40 min"><div><h3>Corte infantil</h3><p>Atendimento cuidadoso para crianças de até 12 anos.</p></div><span>40 min</span><strong>R$ 55</strong><button class="choose-service pressable" type="button">Escolher</button></article>
+        <article class="service reveal" data-service="Dia do noivo" data-price="R$ 240" data-duration="120 min"><div><h3>Dia do noivo</h3><p>Corte, barba, skincare e preparação especial.</p></div><span>120 min</span><strong>R$ 240</strong><button class="choose-service pressable" type="button">Escolher</button></article>
+      </div>
+      <p class="demo-note">Valores demonstrativos. Substitua pelos valores reais antes da publicação comercial.</p>
+    </section>
+
+    <section class="team section" id="equipe">
+      <div class="team-head reveal"><h2>Escolha pela <em>abordagem</em>, não só pela foto.</h2></div>
+      <div class="barbers">
+        <article class="barber reveal" data-barber="Rafael Monteiro"><figure><img src="https://barbearia-imperial-premium.vercel.app/assets/barber-1.jpg" alt="Rafael Monteiro"></figure><div><span>Visagismo · clássicos</span><h3>Rafael Monteiro</h3><p>Perfil demonstrativo focado em leitura de formato e cortes clássicos.</p><button class="choose-barber pressable" type="button">Escolher Rafael</button></div></article>
+        <article class="barber reveal" data-barber="Caio Nascimento"><figure><img src="https://barbearia-imperial-premium.vercel.app/assets/barber-2.jpg" alt="Caio Nascimento"></figure><div><span>Fade · textura</span><h3>Caio Nascimento</h3><p>Perfil demonstrativo orientado a degradês, textura e acabamento urbano.</p><button class="choose-barber pressable" type="button">Escolher Caio</button></div></article>
+        <article class="barber reveal" data-barber="Bruno Azevedo"><figure><img src="https://barbearia-imperial-premium.vercel.app/assets/barber-3.jpg" alt="Bruno Azevedo"></figure><div><span>Barba · navalha</span><h3>Bruno Azevedo</h3><p>Perfil demonstrativo focado em desenho, proporção e cuidado da barba.</p><button class="choose-barber pressable" type="button">Escolher Bruno</button></div></article>
+      </div>
+    </section>
+
+    <section class="work">
+      <div class="work-copy reveal"><h2>O trabalho deve <em>falar primeiro.</em></h2><p>Na versão do cliente, esta faixa deve usar apenas trabalhos reais da equipe.</p></div>
+      <div class="film"><figure class="reveal"><img src="https://barbearia-imperial-premium.vercel.app/assets/cut.jpg" alt="Exemplo de trabalho de corte"></figure><figure class="reveal"><img src="https://barbearia-imperial-premium.vercel.app/assets/beard.jpg" alt="Exemplo de trabalho de barba"></figure><figure class="reveal"><img src="https://barbearia-imperial-premium.vercel.app/assets/barber-1.jpg" alt="Exemplo de trabalho da equipe"></figure></div>
+    </section>
+
+    <section class="booking section" id="agenda">
+      <div class="booking-copy reveal"><h2>Monte seu pedido.<br><em>A equipe confirma.</em></h2><p>Você escolhe serviço, profissional, dia e horário preferido. O WhatsApp abre com tudo preenchido.</p><div class="booking-points"><span>Sem cadastro</span><span>Sem senha</span><span>Sem aplicativo</span></div></div>
+      <div class="builder reveal">
+        <div class="builder-group"><label for="service-select">Serviço</label><select id="service-select"><option value="Corte assinatura" data-price="R$ 65" data-duration="45 min">Corte assinatura — R$ 65</option><option value="Barba imperial" data-price="R$ 50" data-duration="35 min">Barba imperial — R$ 50</option><option value="Corte + barba" data-price="R$ 105" data-duration="75 min">Corte + barba — R$ 105</option><option value="Camuflagem" data-price="R$ 55" data-duration="30 min">Camuflagem — R$ 55</option><option value="Corte infantil" data-price="R$ 55" data-duration="40 min">Corte infantil — R$ 55</option><option value="Dia do noivo" data-price="R$ 240" data-duration="120 min">Dia do noivo — R$ 240</option></select></div>
+        <div class="builder-group"><label for="barber-select">Profissional</label><select id="barber-select"><option>Rafael Monteiro</option><option>Caio Nascimento</option><option>Bruno Azevedo</option></select></div>
+        <div class="builder-row"><div class="builder-group"><label for="preferred-date">Dia preferido</label><input id="preferred-date" type="date"></div><div class="builder-group"><label for="time-select">Horário preferido</label><select id="time-select"><option>09:00</option><option>10:30</option><option>13:00</option><option>15:30</option><option>17:00</option><option>19:30</option></select></div></div>
+        <div class="ticket" aria-live="polite"><span>Seu pedido</span><strong id="ticket-service">Corte assinatura</strong><p id="ticket-meta">Rafael Monteiro · horário a combinar · 45 min</p><b id="ticket-price">R$ 65</b></div>
+        <a class="whatsapp-cta pressable" id="whatsapp-cta" href="https://wa.me/" target="_blank" rel="noopener noreferrer">Pedir este horário <span>→</span></a>
+        <small class="availability">Pedido demonstrativo: a reserva só existe depois da confirmação da equipe.</small>
+      </div>
+    </section>
+
+    <section class="faq section"><div class="faq-head reveal"><h2>Antes de vir.</h2></div><div class="faq-list"><details class="reveal"><summary>Precisa agendar?<span>+</span></summary><p>Recomendamos pedir um horário para garantir disponibilidade e profissional preferido.</p></details><details class="reveal"><summary>Posso escolher o barbeiro?<span>+</span></summary><p>Sim. A escolha do profissional entra automaticamente no pedido enviado pelo WhatsApp.</p></details><details class="reveal"><summary>Quais formas de pagamento?<span>+</span></summary><p>Informação demonstrativa: substitua pelas formas realmente aceitas pelo cliente.</p></details></div></section>
+  </main>
+
+  <footer><div class="footer-name">IMPERIAL</div><div class="footer-grid"><div><span>Onde</span><p>Endereço demonstrativo — substitua pelo endereço real.</p></div><div><span>Quando</span><p>Horários demonstrativos — confirme antes da publicação.</p></div><div><span>Contato</span><p>WhatsApp e Instagram devem ser trocados pelos canais reais.</p></div></div><a href="#top">Voltar ao começo ↑</a></footer>
+  <script src="script.js"></script>
+</body>
+</html>
