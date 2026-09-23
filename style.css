@@ -27,6 +27,7 @@ a{color:inherit}
 button,input,select{font:inherit}
 button{color:inherit}
 main{overflow:clip}
+
 .site-header{
   min-height:78px;
   display:grid;
@@ -40,6 +41,15 @@ main{overflow:clip}
   z-index:30;
   background:color-mix(in srgb,var(--paper) 94%,transparent);
   backdrop-filter:blur(10px);
+  transition:
+    background 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+.site-header.is-scrolled{
+  background:color-mix(in srgb,var(--paper) 97%,transparent);
+  border-color:color-mix(in srgb,var(--ink) 45%,transparent);
+  box-shadow:0 10px 34px rgba(35,26,20,.08);
 }
 .brand{
   display:inline-flex;
@@ -61,6 +71,7 @@ main{overflow:clip}
   background:var(--ink);
   color:var(--cream);
   font-family:var(--display);
+  transition:transform 180ms var(--ease-out);
 }
 .nav{justify-self:center;display:flex;gap:28px}
 .nav a,.header-cta,footer>a{
@@ -86,7 +97,6 @@ main{overflow:clip}
   align-items:center;
   padding:0 16px;
   border:1px solid var(--ink);
-  transition:background 180ms ease,color 180ms ease,transform 140ms var(--ease-out);
 }
 .menu-toggle{
   width:44px;
@@ -107,8 +117,17 @@ main{overflow:clip}
 }
 .menu-toggle[aria-expanded="true"] span:first-child{transform:translateY(3.5px) rotate(45deg)}
 .menu-toggle[aria-expanded="true"] span:last-child{transform:translateY(-3.5px) rotate(-45deg)}
-.pressable{transition:transform 140ms var(--ease-out),background 180ms ease,color 180ms ease,border-color 180ms ease}
+
+.pressable{
+  transition:
+    transform 140ms var(--ease-out),
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
 .pressable:active{transform:scale(.97)}
+
 .hero{
   min-height:calc(100dvh - 78px);
   display:grid;
@@ -157,6 +176,7 @@ h1 em,h2 em{
 }
 .btn-primary{background:var(--rust);border-color:var(--rust);color:var(--cream)}
 .btn-dark{width:100%;background:var(--ink);color:var(--cream)}
+
 .hero-stage{
   background:var(--rust);
   display:grid;
@@ -164,6 +184,7 @@ h1 em,h2 em{
   min-height:620px;
   border-left:1px solid var(--ink);
   padding:clamp(26px,5vw,64px);
+  overflow:hidden;
 }
 .poster{
   width:min(100%,560px);
@@ -174,6 +195,7 @@ h1 em,h2 em{
   padding:clamp(22px,4vw,42px);
   overflow:hidden;
   box-shadow:0 28px 70px rgba(37,25,18,.22);
+  will-change:transform;
 }
 .poster::before{
   content:"";
@@ -233,6 +255,46 @@ h1 em,h2 em{
   from{transform:rotate(-8deg) translateY(0)}
   to{transform:rotate(-2deg) translateY(-10px)}
 }
+
+/* Hero entrance: one authored motion moment */
+body.motion-ready .hero-copy h1,
+body.motion-ready .hero-copy .hero-text,
+body.motion-ready .hero-copy .btn,
+body.motion-ready .poster{
+  opacity:0;
+}
+body.motion-ready.motion-start .hero-copy h1{
+  opacity:1;
+  animation:hero-copy-in 680ms var(--ease-out) both;
+}
+body.motion-ready.motion-start .hero-copy .hero-text{
+  opacity:1;
+  animation:hero-copy-in 640ms var(--ease-out) 90ms both;
+}
+body.motion-ready.motion-start .hero-copy .btn{
+  opacity:1;
+  animation:hero-copy-in 600ms var(--ease-out) 160ms both;
+}
+body.motion-ready.motion-start .poster{
+  opacity:1;
+  animation:poster-in 820ms var(--ease-out) 70ms both;
+}
+body.motion-ready.motion-start .cut-line{
+  animation:cutline-in 760ms var(--ease-out) 380ms both;
+}
+@keyframes hero-copy-in{
+  from{opacity:0;transform:translateY(20px);filter:blur(4px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+@keyframes poster-in{
+  from{opacity:0;transform:translateY(28px) scale(.965);filter:blur(5px)}
+  to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+@keyframes cutline-in{
+  from{transform:scaleY(.05);opacity:.2}
+  to{transform:scaleY(1);opacity:1}
+}
+
 .section{padding:clamp(76px,9vw,132px) clamp(24px,6vw,90px)}
 .section-intro{
   display:grid;
@@ -252,6 +314,23 @@ h1 em,h2 em{
   max-width:58ch;
   margin:0;
 }
+
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  filter:blur(4px);
+  transition:
+    opacity 520ms var(--ease-out),
+    transform 620ms var(--ease-out),
+    filter 520ms ease;
+  transition-delay:var(--reveal-delay,0ms);
+}
+.reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+  filter:blur(0);
+}
+
 .service-list{border-top:1px solid var(--ink)}
 .service-row{
   display:grid;
@@ -260,6 +339,7 @@ h1 em,h2 em{
   align-items:center;
   padding:32px 0;
   border-bottom:1px solid var(--ink);
+  transition:background 180ms ease,padding-left 220ms var(--ease-out),padding-right 220ms var(--ease-out);
 }
 .service-row h3{
   font-family:var(--display);
@@ -275,7 +355,11 @@ h1 em,h2 em{
   justify-items:end;
   gap:10px;
 }
-.service-action strong{font-family:var(--display);font-size:24px}
+.service-action strong{
+  font-family:var(--display);
+  font-size:24px;
+  transition:transform 180ms var(--ease-out),color 180ms ease;
+}
 .service-pick{
   min-height:44px;
   padding:0 15px;
@@ -284,6 +368,7 @@ h1 em,h2 em{
   font-weight:800;
   cursor:pointer;
 }
+
 .method{
   background:var(--ink);
   color:var(--cream);
@@ -317,6 +402,7 @@ h1 em,h2 em{
   margin:0 0 7px;
 }
 .method-flow p{margin:0;color:#cfc3b4;max-width:56ch}
+
 .booking{
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(360px,520px);
@@ -336,12 +422,18 @@ h1 em,h2 em{
   padding:8px 11px;
   font-size:12px;
   font-weight:700;
+  transition:transform 180ms var(--ease-out),border-color 180ms ease;
 }
 .booking-form{
   border:1px solid var(--ink);
   padding:clamp(22px,4vw,34px);
   background:var(--cream);
   box-shadow:0 24px 60px rgba(45,32,23,.13);
+  transition:transform 260ms var(--ease-out),box-shadow 260ms ease;
+}
+.booking-form.is-highlighted{
+  transform:translateY(-4px);
+  box-shadow:0 30px 72px rgba(45,32,23,.18);
 }
 .booking-form label{
   display:grid;
@@ -361,7 +453,7 @@ h1 em,h2 em{
   color:var(--ink);
   padding:0 12px;
   outline:none;
-  transition:border-color 160ms ease,box-shadow 160ms ease;
+  transition:border-color 160ms ease,box-shadow 160ms ease,transform 160ms var(--ease-out);
 }
 .booking-form input:focus,.booking-form select:focus{
   border-color:var(--rust);
@@ -373,13 +465,14 @@ h1 em,h2 em{
   min-height:24px;
   color:var(--rust-deep);
   font-weight:700;
-  transition:opacity 180ms ease,filter 180ms ease;
+  transition:opacity 180ms ease,filter 180ms ease,transform 180ms var(--ease-out);
 }
 .form-feedback:empty{opacity:0}
 .form-feedback:not(:empty){
   opacity:1;
-  @starting-style{opacity:0;filter:blur(2px)}
+  @starting-style{opacity:0;filter:blur(2px);transform:translateY(4px)}
 }
+
 footer{
   display:grid;
   grid-template-columns:1fr auto auto;
@@ -390,14 +483,28 @@ footer{
 }
 footer p{margin:0;color:var(--muted);font-size:13px}
 .footer-brand{justify-self:start}
+
 :focus-visible{outline:3px solid #1a67a3;outline-offset:3px}
+
 @media(hover:hover) and (pointer:fine){
+  .brand:hover .brand-mark{transform:rotate(-7deg) scale(1.04)}
   .nav a:hover::after{right:0}
   .header-cta:hover{background:var(--ink);color:var(--cream)}
-  .btn-primary:hover{background:var(--rust-deep)}
+  .btn-primary:hover{background:var(--rust-deep);box-shadow:0 10px 24px rgba(143,52,36,.18)}
+  .service-row:hover{
+    background:color-mix(in srgb,var(--rust) 6%,transparent);
+    padding-left:12px;
+    padding-right:12px;
+  }
+  .service-row:hover .service-action strong{
+    color:var(--rust);
+    transform:translateX(-4px);
+  }
   .service-pick:hover{background:var(--ink);color:var(--cream)}
+  .booking-proof span:hover{transform:translateY(-2px);border-color:var(--ink)}
   footer>a:hover{text-decoration:underline}
 }
+
 @media(max-width:900px){
   .site-header{grid-template-columns:1fr auto}
   .header-cta{display:none}
@@ -425,6 +532,7 @@ footer p{margin:0;color:var(--muted);font-size:13px}
   .booking{gap:50px}
   footer{grid-template-columns:1fr}
 }
+
 @media(max-width:600px){
   .hero{min-height:auto}
   .hero-copy{padding:62px 20px}
@@ -440,8 +548,26 @@ footer p{margin:0;color:var(--muted);font-size:13px}
   .form-row{grid-template-columns:1fr}
   .booking-form{padding:22px}
 }
+
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .scissors{animation:none}
-  *,*::before,*::after{transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important}
+  body.motion-ready .hero-copy h1,
+  body.motion-ready .hero-copy .hero-text,
+  body.motion-ready .hero-copy .btn,
+  body.motion-ready .poster{
+    opacity:1!important;
+    animation:none!important;
+  }
+  .reveal{
+    opacity:1!important;
+    transform:none!important;
+    filter:none!important;
+    transition:none!important;
+  }
+  *,*::before,*::after{
+    transition-duration:.001ms!important;
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+  }
 }
