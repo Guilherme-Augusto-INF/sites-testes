@@ -38,7 +38,7 @@ test('imagens aceitam HTTPS e bloqueiam protocolos inseguros', () => {
   assert.equal(safeImageUrl('javascript:alert(1)'), '');
 });
 
-test('senha local exige ao menos 8 caracteres, letra e número', () => {
+test('senha local exige ao menos 10 caracteres, letra e número', () => {
   assert.equal(strongPassword('1234567890'), false);
   assert.equal(strongPassword('abcdefghij'), false);
   assert.equal(strongPassword('abc123'), false);
