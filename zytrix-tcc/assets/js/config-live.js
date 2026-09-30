@@ -250,6 +250,10 @@ function collectForm({ requireSubcategory = false } = {}) {
 }
 async function save() {
     const message = document.querySelector('#config-msg');
+    if (!user.emailVerified) {
+        message.innerHTML = '<div class="message err">Verifique seu e-mail para alterar a live.</div>';
+        return;
+    }
     const form = collectForm();
     if (form.error) {
         message.innerHTML = `<div class="message err">${escapeHtml(form.error)}</div>`;
@@ -282,6 +286,10 @@ async function save() {
 }
 async function toggle() {
     const message = document.querySelector('#config-msg');
+    if (!user.emailVerified) {
+        message.innerHTML = '<div class="message err">Verifique seu e-mail para alterar a live.</div>';
+        return;
+    }
     const starting = stream.status !== 'live';
     const form = collectForm({ requireSubcategory: starting });
     if (form.error) {
