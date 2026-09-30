@@ -11,7 +11,6 @@ const root = document.querySelector('#live-root');
 let stream = null;
 let streamerProfile = null;
 let user = null;
-let userProfile = null;
 let balance = 0;
 let selectedAmount = 50;
 let walletUnsubscribe = null;
@@ -28,7 +27,6 @@ const roleCache = new Map();
 const profileCache = new Map();
 onAuthStateChanged(auth, async (currentUser) => {
     user = currentUser;
-    userProfile = null;
     currentUserIsAdmin = false;
     currentChatBan = null;
     if (banUnsubscribe) {
@@ -40,7 +38,6 @@ onAuthStateChanged(auth, async (currentUser) => {
         walletUnsubscribe = null;
     }
     if (user) {
-        userProfile = await getCachedProfile(user.uid);
         currentUserIsAdmin = await isAdminUid(user.uid);
         startOwnBanListener();
         walletUnsubscribe = onSnapshot(doc(db, 'wallets', user.uid), snap => {
