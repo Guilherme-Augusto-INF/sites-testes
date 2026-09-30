@@ -1,57 +1,46 @@
 const SUPABASE_URL = 'https://nmwktpnsbwhgxkqmcaud.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_0v9XHkOALMZlg-cQHE6mCA_d_1j6xbE';
 
-const supabase = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
-function setMessage(id, message) {
+function showMessage(id, message) {
   const element = document.getElementById(id);
   if (element) element.textContent = message;
 }
 
-function friendlyAuthError(error) {
-  const message = (error?.message || '').toLowerCase();
-
-  if (message.includes('email not confirmed')) {
-    return 'Seu email ainda não foi confirmado. Verifique sua caixa de entrada e confirme a conta antes de entrar.';
+function getSupabaseClient() {
+  if (!window.supabase) {
+    throw new Error('Biblioteca do Supabase não foi carregada.');
   }
-
-  if (message.includes('invalid login credentials')) {
-    return 'Email ou senha incorretos.';
-  }
-
-  if (message.includes('user already registered')) {
-    return 'Já existe uma conta cadastrada com esse email.';
-  }
-
-  if (message.includes('password should be at least')) {
-    return 'A senha deve ter pelo menos 6 caracteres.';
-  }
-
-  return error?.message || 'Ocorreu um erro. Tente novamente.';
+  return window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 }
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
+  let supabase;
+  try {
+    supabase = getSupabaseClient();
+  } catch (error) {
+    console.error(error);
+    showMessage('signup-message', 'Erro ao carregar o sistema de cadastro. Atualize a página e tente novamente.');
+    showMessage('login-message', 'Erro ao carregar o sistema de login. Atualize a página e tente novamente.');
+    return;
+  }
+
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
     loginForm.addEventListener('submit', async (event) => {
       event.preventDefault();
-      setMessage('login-message', 'Entrando...');
+      showMessage('login-message', 'Entrando...');
 
       const email = document.getElementById('login-email').value.trim();
       const password = document.getElementById('login-password').value;
 
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-      if (error) {
+      try {
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        window.location.href = 'index.html';
+      } catch (error) {
         console.error('Login Supabase:', error);
-        setMessage('login-message', friendlyAuthError(error));
-        return;
+        showMessage('login-message', error.message || 'Não foi possível entrar. Verifique o email e a senha.');
       }
-
-      window.location.href = 'index.html';
     });
   }
 
@@ -59,37 +48,40 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (signupForm) {
     signupForm.addEventListener('submit', async (event) => {
       event.preventDefault();
+      event.stopPropagation();
 
       const email = document.getElementById('signup-email').value.trim();
       const password = document.getElementById('signup-password').value;
       const confirmation = document.getElementById('signup-password-confirm').value;
 
       if (password !== confirmation) {
-        setMessage('signup-message', 'As senhas não coincidem.');
+        showMessage('signup-message', 'As senhas não coincidem.');
         return;
       }
 
-      setMessage('signup-message', 'Criando sua conta...');
+      showMessage('signup-message', 'Criando sua conta...');
 
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          emailRedirectTo: new URL('login.html', window.location.href).href
+      try {
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: new URL('login.html', window.location.href).href
+          }
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+          showMessage('signup-message', 'Conta criada! Entrando...');
+          window.location.href = 'index.html';
+        } else {
+          showMessage('signup-message', 'Conta criada! Verifique seu email para confirmar o cadastro antes de entrar.');
+          signupForm.reset();
         }
-      });
-
-      if (error) {
+      } catch (error) {
         console.error('Cadastro Supabase:', error);
-        setMessage('signup-message', friendlyAuthError(error));
-        return;
-      }
-
-      if (data.session) {
-        window.location.href = 'index.html';
-      } else {
-        setMessage('signup-message', 'Conta criada! Enviamos um email de confirmação. Abra o link recebido e depois volte para fazer login.');
-        signupForm.reset();
+        showMessage('signup-message', error.message || 'Não foi possível criar a conta.');
       }
     });
   }
@@ -103,26 +95,27 @@ document.addEventListener('DOMContentLoaded', async () => {
       event.preventDefault();
 
       const email = document.getElementById('recovery-email').value.trim();
-      setMessage('recovery-message', 'Enviando link...');
+      showMessage('recovery-message', 'Enviando link...');
 
-      const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: new URL('recuperar-senha.html', window.location.href).href
-      });
-
-      if (error) {
-        setMessage('recovery-message', 'Não foi possível enviar o link. Tente novamente.');
-        return;
+      try {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: new URL('recuperar-senha.html', window.location.href).href
+        });
+        if (error) throw error;
+        showMessage('recovery-message', 'Link enviado! Verifique seu email para continuar.');
+      } catch (error) {
+        console.error('Recuperação Supabase:', error);
+        showMessage('recovery-message', error.message || 'Não foi possível enviar o link. Tente novamente.');
       }
-
-      setMessage('recovery-message', 'Link enviado! Verifique seu email para continuar.');
     });
   }
 
-  const { data: { session } } = await supabase.auth.getSession();
-  if (session && setNewPassword && requestReset && window.location.hash.includes('type=recovery')) {
-    requestReset.hidden = true;
-    setNewPassword.hidden = false;
-  }
+  supabase.auth.getSession().then(({ data }) => {
+    if (data.session && setNewPassword && requestReset && window.location.hash.includes('type=recovery')) {
+      requestReset.hidden = true;
+      setNewPassword.hidden = false;
+    }
+  });
 
   const updateButton = document.getElementById('update-password');
   if (updateButton) {
@@ -131,26 +124,26 @@ document.addEventListener('DOMContentLoaded', async () => {
       const confirmation = document.getElementById('new-password-confirm').value;
 
       if (password.length < 6) {
-        setMessage('new-password-message', 'A senha deve ter pelo menos 6 caracteres.');
+        showMessage('new-password-message', 'A senha deve ter pelo menos 6 caracteres.');
         return;
       }
 
       if (password !== confirmation) {
-        setMessage('new-password-message', 'As senhas não coincidem.');
+        showMessage('new-password-message', 'As senhas não coincidem.');
         return;
       }
 
-      setMessage('new-password-message', 'Atualizando senha...');
+      showMessage('new-password-message', 'Atualizando senha...');
 
-      const { error } = await supabase.auth.updateUser({ password });
-
-      if (error) {
-        setMessage('new-password-message', 'Não foi possível atualizar a senha. Solicite um novo link.');
-        return;
+      try {
+        const { error } = await supabase.auth.updateUser({ password });
+        if (error) throw error;
+        await supabase.auth.signOut();
+        window.location.href = 'login.html';
+      } catch (error) {
+        console.error('Atualização de senha:', error);
+        showMessage('new-password-message', error.message || 'Não foi possível atualizar a senha. Solicite um novo link.');
       }
-
-      await supabase.auth.signOut();
-      window.location.href = 'login.html';
     });
   }
 });
