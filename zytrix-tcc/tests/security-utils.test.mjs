@@ -42,6 +42,6 @@ test('senha local exige ao menos 10 caracteres, letra e número', () => {
   assert.equal(strongPassword('1234567890'), false);
   assert.equal(strongPassword('abcdefghij'), false);
   assert.equal(strongPassword('abc123'), false);
-  assert.equal(strongPassword('abc12345'), true);
+  assert.equal(strongPassword('abc12345'), false);
   assert.equal(strongPassword('Zytrix2026!'), true);
 });
