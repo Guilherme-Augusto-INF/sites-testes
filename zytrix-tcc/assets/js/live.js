@@ -59,19 +59,48 @@ async function clearViewerPresence() {
     const uid = viewerPresenceUid;
     viewerPresenceUid = '';
     if (!uid || !streamId) return;
-    await deleteDoc(doc(db, 'streams', streamId, 'viewers', uid)).catch(() => {});
+    const streamRef = doc(db, 'streams', streamId);
+    const viewerRef = doc(db, 'streams', streamId, 'viewers', uid);
+    await runTransaction(db, async tx => {
+        const viewerSnap = await tx.get(viewerRef);
+        if (!viewerSnap.exists()) return;
+        const streamSnap = await tx.get(streamRef);
+        tx.delete(viewerRef);
+        if (streamSnap.exists()) {
+            const count = Math.max(0, Number(streamSnap.data().viewerCount || 0) - 1);
+            tx.update(streamRef, { viewerCount: count });
+        }
+    }).catch(() => {});
 }
-async function touchViewerPresence() {
+async function joinViewerPresence() {
     if (!user || !stream || stream.status !== 'live' || !streamId) return;
-    const ref = doc(db, 'streams', streamId, 'viewers', user.uid);
-    const snap = await getDoc(ref);
-    await setDoc(ref, {
-        uid: user.uid,
-        joinedAt: snap.exists() ? snap.data().joinedAt : serverTimestamp(),
-        lastSeen: serverTimestamp(),
-        expiresAt: Timestamp.fromMillis(Date.now() + 120000)
+    const streamRef = doc(db, 'streams', streamId);
+    const viewerRef = doc(db, 'streams', streamId, 'viewers', user.uid);
+    await runTransaction(db, async tx => {
+        const viewerSnap = await tx.get(viewerRef);
+        const expiresAt = Timestamp.fromMillis(Date.now() + 120000);
+        if (viewerSnap.exists()) {
+            tx.set(viewerRef, { lastSeen: serverTimestamp(), expiresAt }, { merge: true });
+            return;
+        }
+        const streamSnap = await tx.get(streamRef);
+        if (!streamSnap.exists() || streamSnap.data().status !== 'live') return;
+        tx.set(viewerRef, {
+            uid: user.uid,
+            joinedAt: serverTimestamp(),
+            lastSeen: serverTimestamp(),
+            expiresAt
+        });
+        tx.update(streamRef, { viewerCount: Math.max(0, Number(streamSnap.data().viewerCount || 0)) + 1 });
     });
     viewerPresenceUid = user.uid;
+}
+async function heartbeatViewerPresence() {
+    if (!viewerPresenceUid || !streamId) return;
+    await setDoc(doc(db, 'streams', streamId, 'viewers', viewerPresenceUid), {
+        lastSeen: serverTimestamp(),
+        expiresAt: Timestamp.fromMillis(Date.now() + 120000)
+    }, { merge: true });
 }
 function syncViewerPresence() {
     clearInterval(viewerHeartbeat);
@@ -80,8 +109,8 @@ function syncViewerPresence() {
         if (viewerPresenceUid) clearViewerPresence();
         return;
     }
-    touchViewerPresence().catch(() => {});
-    viewerHeartbeat = setInterval(() => touchViewerPresence().catch(() => {}), 60000);
+    joinViewerPresence().catch(() => {});
+    viewerHeartbeat = setInterval(() => heartbeatViewerPresence().catch(() => {}), 60000);
 }
 
 async function getCachedProfile(uid) {
@@ -727,8 +756,7 @@ else {
 }
 
 window.addEventListener('pagehide', () => {
-    clearInterval(viewerHeartbeat);
-    if (viewerPresenceUid && streamId) deleteDoc(doc(db, 'streams', streamId, 'viewers', viewerPresenceUid)).catch(() => {});
+    clearViewerPresence();
     walletUnsubscribe?.();
     chatUnsubscribe?.();
     banUnsubscribe?.();
