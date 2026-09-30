@@ -105,3 +105,25 @@ textarea{resize:vertical}
 
 .credito-foto{font-size:.85rem;color:#254e7b;margin:-12px 0 22px;line-height:1.5}
 .credito-foto a{text-decoration:underline}
+
+
+/* ---------- Acesso / Perfil ---------- */
+.auth-actions{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.auth-btn{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:0 16px;border:2px solid rgba(255,255,255,.72);border-radius:22px;color:var(--branco);font-weight:700;font-size:.88rem;transition:.18s ease}
+.auth-btn:hover{background:var(--branco);color:var(--azul-esc);transform:translateY(-1px)}
+.auth-register{background:var(--amarelo);border-color:var(--amarelo);color:var(--azul-esc)}
+.auth-profile{background:var(--amarelo);border-color:var(--amarelo);color:var(--azul-esc)}
+.auth-profile.active{box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.profile-container{max-width:720px}
+.profile-form h2{font-size:1.7rem;margin-bottom:22px}
+.profile-form input:disabled{opacity:.7;cursor:not-allowed}
+.profile-message{min-height:24px;margin:4px 0 12px;font-weight:700}
+.profile-message.success{color:#d9ffdc}
+.profile-message.error{color:#ffe0e0}
+.profile-buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-logout{background:transparent;color:var(--branco);border:2px solid var(--branco)}
+@media(max-width:700px){
+  .auth-actions{width:100%;order:2;justify-content:center}
+  .auth-btn{flex:1;max-width:160px}
+  .profile-buttons{grid-template-columns:1fr}
+}
