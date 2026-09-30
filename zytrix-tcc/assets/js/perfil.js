@@ -85,6 +85,9 @@ async function load() {
             usernameUpdatedAt: serverTimestamp()
         }));
     }
+    if (profileSnap.exists() && !profileSnap.data().usernameUpdatedAt) {
+        repairs.push(setDoc(profileRef, { usernameUpdatedAt: serverTimestamp() }, { merge: true }));
+    }
     if (repairs.length) {
         await Promise.all(repairs);
         [profileSnap, accountSnap] = await Promise.all([getDoc(profileRef), getDoc(accountRef)]);
