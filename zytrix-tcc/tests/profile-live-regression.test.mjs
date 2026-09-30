@@ -15,7 +15,9 @@ test('configuração de live não depende de carteira Zy Coins', () => {
   assert.equal(config.includes('ensureWallet(user.uid)'), false);
 });
 
-test('live mantém presença do espectador nas regras existentes', () => {
+test('live mantém presença e contador de espectadores sincronizados', () => {
   assert.match(live, /'viewers'/);
-  assert.match(live, /setInterval\(\(\) => touchViewerPresence/);
+  assert.match(live, /joinViewerPresence/);
+  assert.match(live, /heartbeatViewerPresence/);
+  assert.match(live, /viewerCount/);
 });
