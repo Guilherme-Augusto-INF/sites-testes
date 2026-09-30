@@ -1,0 +1,25 @@
+name: Zytrix TCC Check
+
+on:
+  push:
+    paths:
+      - "zytrix-tcc/**"
+      - ".github/workflows/zytrix-tcc-check.yml"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: zytrix-tcc
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: npm test
+      - run: python3 scripts/check-site.py
