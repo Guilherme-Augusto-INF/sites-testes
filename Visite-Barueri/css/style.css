@@ -127,3 +127,49 @@ textarea{resize:vertical}
   .auth-btn{flex:1;max-width:160px}
   .profile-buttons{grid-template-columns:1fr}
 }
+
+
+/* ---------- Botões de autenticação no cabeçalho ---------- */
+.topo .auth-actions{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:12px;
+  flex-shrink:0;
+}
+.topo .auth-actions .auth-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:86px;
+  min-height:40px;
+  padding:0 16px;
+  border:2px solid rgba(255,255,255,.9);
+  border-radius:12px;
+  background:rgba(42,93,148,.9);
+  color:#fff;
+  font-weight:700;
+  font-size:.88rem;
+  line-height:1;
+  box-shadow:0 2px 6px rgba(0,0,0,.14);
+}
+.topo .auth-actions .auth-register{
+  background:#fccf7f;
+  border-color:#fccf7f;
+  color:#2a5d94;
+}
+.topo .auth-actions .auth-btn:hover{
+  transform:translateY(-1px);
+  box-shadow:0 4px 10px rgba(0,0,0,.18);
+}
+@media(max-width:700px){
+  .topo .auth-actions{
+    width:auto;
+    order:initial;
+    gap:8px;
+  }
+  .topo .auth-actions .auth-btn{
+    min-width:76px;
+    padding:0 12px;
+  }
+}
