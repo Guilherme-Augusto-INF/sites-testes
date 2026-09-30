@@ -11,6 +11,28 @@ function setMessage(id, message) {
   if (element) element.textContent = message;
 }
 
+function friendlyAuthError(error) {
+  const message = (error?.message || '').toLowerCase();
+
+  if (message.includes('email not confirmed')) {
+    return 'Seu email ainda não foi confirmado. Verifique sua caixa de entrada e confirme a conta antes de entrar.';
+  }
+
+  if (message.includes('invalid login credentials')) {
+    return 'Email ou senha incorretos.';
+  }
+
+  if (message.includes('user already registered')) {
+    return 'Já existe uma conta cadastrada com esse email.';
+  }
+
+  if (message.includes('password should be at least')) {
+    return 'A senha deve ter pelo menos 6 caracteres.';
+  }
+
+  return error?.message || 'Ocorreu um erro. Tente novamente.';
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
   const loginForm = document.getElementById('login-form');
   if (loginForm) {
@@ -24,7 +46,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) {
-        setMessage('login-message', 'Não foi possível entrar. Verifique o email e a senha.');
+        console.error('Login Supabase:', error);
+        setMessage('login-message', friendlyAuthError(error));
         return;
       }
 
@@ -57,14 +80,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
 
       if (error) {
-        setMessage('signup-message', 'Não foi possível criar a conta. Verifique os dados e tente novamente.');
+        console.error('Cadastro Supabase:', error);
+        setMessage('signup-message', friendlyAuthError(error));
         return;
       }
 
       if (data.session) {
         window.location.href = 'index.html';
       } else {
-        setMessage('signup-message', 'Conta criada! Verifique seu email para confirmar o cadastro antes de entrar.');
+        setMessage('signup-message', 'Conta criada! Enviamos um email de confirmação. Abra o link recebido e depois volte para fazer login.');
         signupForm.reset();
       }
     });
