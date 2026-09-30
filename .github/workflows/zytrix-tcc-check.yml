@@ -23,3 +23,5 @@ jobs:
           python-version: "3.x"
       - run: npm test
       - run: python3 scripts/check-site.py
+      - name: Validate Firestore rules
+        run: npx --yes firebase-tools@14.16.0 emulators:exec --project demo-zytrix --only firestore "echo FIRESTORE_RULES_OK"
