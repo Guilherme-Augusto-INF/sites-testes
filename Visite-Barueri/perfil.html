@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Perfil – Visite Barueri</title>
+<title>Meu perfil – Visite Barueri</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Pathway+Gothic+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
@@ -11,44 +11,32 @@
 <script src="js/profile.js" defer></script>
 </head>
 <body>
-<header class="topo">
-  <a class="logo" href="index.html"><span class="pin">📍</span><span>Visite<br>Barueri</span></a>
-  <nav>
-    <div class="menu"><button>Sobre Barueri ▾</button><div class="sub">
-      <a href="historia.html">História de Barueri</a><a href="curiosidades.html">Curiosidades</a><a href="quem-somos.html">Quem somos</a><a href="contato.html">Contato</a>
-    </div></div>
-    <div class="menu"><button>Lugares Turísticos ▾</button><div class="sub">
-      <a href="locais.html">Todos os locais</a><a href="arena-barueri.html">Arena Barueri</a><a href="parque-dom-jose.html">Parque Dom José</a><a href="kartodromo.html">Kartódromo</a><a href="praca-das-artes.html">Praça das Artes</a><a href="feira-noturna.html">Feira Noturna</a><a href="museu-da-biblia.html">Museu da Bíblia</a>
-    </div></div>
-  </nav>
-  <div class="auth-actions"><a class="auth-btn auth-profile active" href="perfil.html">Perfil</a></div>
-</header>
-
 <main>
-<section class="page">
-  <h1 class="faixa">Meu perfil</h1>
-  <div class="conteudo profile-container">
-    <form class="caixa profile-form" id="profile-form">
-      <h2>Informações da conta</h2>
-      <label>Email
-        <input id="profile-email" type="email" disabled>
-      </label>
-      <label>Nome de usuário
-        <input id="profile-username" type="text" maxlength="30" placeholder="Seu nome de usuário">
-      </label>
-      <label>Nome completo
-        <input id="profile-full-name" type="text" maxlength="80" placeholder="Seu nome">
-      </label>
-      <label>Sobre você
-        <textarea id="profile-bio" maxlength="240" rows="4" placeholder="Conte um pouco sobre você..."></textarea>
-      </label>
-      <p id="profile-message" class="profile-message" role="status" aria-live="polite"></p>
-      <div class="profile-buttons">
-        <button class="btn" type="submit">Salvar perfil</button>
-        <button class="btn btn-logout" id="logout-button" type="button">Sair da conta</button>
-      </div>
-    </form>
-  </div>
+<section class="page auth profile-page">
+  <a class="home" href="index.html" title="Início">🏠</a>
+  <form class="caixa profile-card" id="profile-form">
+    <h2>Meu perfil</h2>
+    <div class="profile-avatar" id="profile-avatar-preview">👤</div>
+    <label>Foto de perfil:
+      <input id="avatar-file" type="file" accept="image/*">
+    </label>
+    <label>Email:
+      <input id="profile-email" type="email" readonly>
+    </label>
+    <label>Nome de usuário:
+      <input id="profile-username" type="text" maxlength="30" placeholder="ex.: isaque123" autocomplete="username">
+    </label>
+    <label>Nome completo:
+      <input id="profile-full-name" type="text" maxlength="80" placeholder="Seu nome completo" autocomplete="name">
+    </label>
+    <label>Bio:
+      <textarea id="profile-bio" rows="4" maxlength="280" placeholder="Conte um pouco sobre você..."></textarea>
+    </label>
+    <p class="profile-note">O ID da conta é gerado automaticamente e não pode ser alterado.</p>
+    <p id="profile-message" class="profile-message" role="alert" aria-live="polite"></p>
+    <button class="btn" type="submit" id="save-profile">Salvar alterações</button>
+    <a class="profile-back" href="index.html">Voltar para o site</a>
+  </form>
 </section>
 </main>
 <footer class="rodape">© 2026 – Visite Barueri</footer>
