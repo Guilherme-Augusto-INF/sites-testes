@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Barbearia Brasa — corte, barba e acabamento com hora marcada.">
+  <meta name="theme-color" content="#efe7d8">
+  <title>Barbearia Brasa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Barbearia Brasa, início">
+      <span class="brand-mark" aria-hidden="true">B</span>
+      <span>BARBEARIA <strong>BRASA</strong></span>
+    </a>
+
+    <nav class="nav" id="main-nav" aria-label="Navegação principal">
+      <a href="#servicos">Serviços</a>
+      <a href="#metodo">Como funciona</a>
+      <a href="#agenda">Agenda</a>
+    </nav>
+
+    <a class="header-cta pressable" href="#agenda">Marcar horário</a>
+    <button class="menu-toggle pressable" type="button" aria-label="Abrir menu" aria-controls="main-nav" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-copy">
+        <h1>Seu corte não precisa <em>parecer o de todo mundo.</em></h1>
+        <p class="hero-text">A Brasa trabalha formato, textura e acabamento para entregar um visual que combina com você — e que continua funcionando depois que você sai da cadeira.</p>
+        <a class="btn btn-primary pressable" href="#agenda">Quero marcar um horário</a>
+      </div>
+
+      <div class="hero-stage" aria-hidden="true">
+        <div class="poster">
+          <div class="poster-top">BARBEARIA</div>
+          <div class="poster-word">BRASA</div>
+          <div class="cut-line"></div>
+
+          <svg class="scissors" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+            <circle cx="58" cy="170" r="29" stroke="currentColor" stroke-width="12"/>
+            <circle cx="122" cy="170" r="29" stroke="currentColor" stroke-width="12"/>
+            <path d="M79 151L199 54" stroke="currentColor" stroke-width="13" stroke-linecap="round"/>
+            <path d="M107 151L43 67" stroke="currentColor" stroke-width="13" stroke-linecap="round"/>
+            <path d="M199 54L219 41" stroke="currentColor" stroke-width="13" stroke-linecap="round"/>
+          </svg>
+
+          <div class="poster-note">CORTE · BARBA · ACABAMENTO</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services section" id="servicos">
+      <div class="section-intro">
+        <h2>Escolha o que você precisa. <em>A técnica vem junto.</em></h2>
+        <p>Sem pacote confuso, sem serviço escondido. Três opções claras e acabamento cuidadoso em todas elas.</p>
+      </div>
+
+      <div class="service-list">
+        <article class="service-row">
+          <div>
+            <h3>Corte</h3>
+            <p>Tesoura, máquina e acabamento pensado para o seu cabelo e rotina.</p>
+          </div>
+          <div class="service-action">
+            <strong>R$ 45</strong>
+            <button class="service-pick pressable" type="button" data-service="Corte — R$ 45">Escolher</button>
+          </div>
+        </article>
+
+        <article class="service-row">
+          <div>
+            <h3>Barba</h3>
+            <p>Desenho, alinhamento e finalização para limpar o contorno sem exagerar.</p>
+          </div>
+          <div class="service-action">
+            <strong>R$ 35</strong>
+            <button class="service-pick pressable" type="button" data-service="Barba — R$ 35">Escolher</button>
+          </div>
+        </article>
+
+        <article class="service-row">
+          <div>
+            <h3>Combo Brasa</h3>
+            <p>Corte + barba na mesma sessão, com o conjunto pensado como uma peça só.</p>
+          </div>
+          <div class="service-action">
+            <strong>R$ 70</strong>
+            <button class="service-pick pressable" type="button" data-service="Combo Brasa — R$ 70">Escolher</button>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="method section" id="metodo">
+      <div class="method-title">
+        <h2>Antes da máquina, <em>a gente olha.</em></h2>
+        <p>O resultado melhora quando o corte começa por entender a pessoa e não por repetir um molde.</p>
+      </div>
+
+      <div class="method-flow">
+        <article>
+          <span class="method-tag">Começo</span>
+          <h3>Leitura</h3>
+          <p>Vemos textura, crescimento, formato e o que você realmente consegue manter no dia a dia.</p>
+        </article>
+        <article>
+          <span class="method-tag">Durante</span>
+          <h3>Construção</h3>
+          <p>O formato é feito aos poucos, conferindo proporção em vez de correr até o acabamento.</p>
+        </article>
+        <article>
+          <span class="method-tag">Final</span>
+          <h3>Refino</h3>
+          <p>Linhas, volume e textura são ajustados até o conjunto ficar limpo e fácil de usar.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="booking section" id="agenda">
+      <div class="booking-copy">
+        <h2>Marque sem enrolação.</h2>
+        <p>Escolha o serviço, o dia e o horário. Este protótipo confirma a escolha na tela e não envia dados para nenhum servidor.</p>
+        <div class="booking-proof">
+          <span>Sem cadastro</span>
+          <span>Sem pagamento antecipado</span>
+        </div>
+      </div>
+
+      <form class="booking-form" id="booking-form">
+        <label>
+          Nome
+          <input name="nome" autocomplete="name" required placeholder="Como podemos te chamar?">
+        </label>
+
+        <label>
+          Serviço
+          <select name="servico" id="service-select" required>
+            <option value="">Selecione</option>
+            <option>Corte — R$ 45</option>
+            <option>Barba — R$ 35</option>
+            <option>Combo Brasa — R$ 70</option>
+          </select>
+        </label>
+
+        <div class="form-row">
+          <label>
+            Dia
+            <input type="date" name="dia" required>
+          </label>
+
+          <label>
+            Horário
+            <select name="horario" required>
+              <option value="">Selecione</option>
+              <option>09:00</option>
+              <option>10:30</option>
+              <option>13:30</option>
+              <option>15:00</option>
+              <option>16:30</option>
+              <option>18:00</option>
+            </select>
+          </label>
+        </div>
+
+        <button class="btn btn-dark pressable" type="submit">
+          <span>Confirmar pedido</span>
+        </button>
+        <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="#inicio">
+      <span class="brand-mark" aria-hidden="true">B</span>
+      <span>BARBEARIA <strong>BRASA</strong></span>
+    </a>
+    <p>Corte com técnica. Atendimento com hora marcada.</p>
+    <a href="#inicio">Voltar ao topo</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
