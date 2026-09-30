@@ -116,7 +116,7 @@ export function footer() {
           <span class="figma-brand-name">Zytrix</span>
         </a>
 
-        <span class="figma-footer-copy">© 2025 Zytrix. Todos os direitos reservados.</span>
+        <span class="figma-footer-copy">© 2026 Zytrix. Todos os direitos reservados.</span>
 
         <nav class="figma-footer-links" aria-label="Links institucionais">
           <a href="sobre.html">Sobre</a>
