@@ -1855,6 +1855,55 @@ service cloud.firestore {
         ||
 
         (
+          verifiedUser()
+
+          && request.resource.data
+              .diff(resource.data)
+              .affectedKeys()
+              .hasOnly(["viewerCount"])
+
+          && request.resource.data.viewerCount
+              is int
+
+          && request.resource.data.viewerCount
+              >= 0
+
+          && (
+            (
+              request.resource.data.viewerCount
+                  == resource.data.viewerCount + 1
+
+              && !exists(
+                /databases/$(database)/documents/streams/$(streamId)/viewers/$(request.auth.uid)
+              )
+
+              && existsAfter(
+                /databases/$(database)/documents/streams/$(streamId)/viewers/$(request.auth.uid)
+              )
+            )
+
+            ||
+
+            (
+              resource.data.viewerCount > 0
+
+              && request.resource.data.viewerCount
+                  == resource.data.viewerCount - 1
+
+              && exists(
+                /databases/$(database)/documents/streams/$(streamId)/viewers/$(request.auth.uid)
+              )
+
+              && !existsAfter(
+                /databases/$(database)/documents/streams/$(streamId)/viewers/$(request.auth.uid)
+              )
+            )
+          )
+        )
+
+        ||
+
+        (
           isAdmin()
 
           && request.resource.data.viewerCount
@@ -3747,7 +3796,14 @@ service cloud.firestore {
           "joinedAt",
           "lastSeen",
           "expiresAt"
-        ]);
+        ])
+
+        && getAfter(
+          /databases/$(database)/documents/streams/$(streamId)
+        ).data.viewerCount
+            == get(
+              /databases/$(database)/documents/streams/$(streamId)
+            ).data.viewerCount + 1;
 
 
       allow update:
@@ -3776,7 +3832,25 @@ service cloud.firestore {
 
 
       allow delete:
-        if isOwner(viewerUid)
+        if
+        (
+          isOwner(viewerUid)
+
+          && (
+            get(
+              /databases/$(database)/documents/streams/$(streamId)
+            ).data.viewerCount == 0
+
+            ||
+
+            getAfter(
+              /databases/$(database)/documents/streams/$(streamId)
+            ).data.viewerCount
+                == get(
+                  /databases/$(database)/documents/streams/$(streamId)
+                ).data.viewerCount - 1
+          )
+        )
 
         || isAdmin()
 
