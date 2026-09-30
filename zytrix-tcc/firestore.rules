@@ -1251,18 +1251,6 @@ service cloud.firestore {
                     "zytrixId"
                   ])
             )
-
-            ||
-
-            (
-              !resource.data.keys().hasAll(["usernameUpdatedAt"])
-              && request.resource.data.username == resource.data.username
-              && request.resource.data.usernameUpdatedAt == request.time
-              && request.resource.data
-                  .diff(resource.data)
-                  .affectedKeys()
-                  .hasOnly(["usernameUpdatedAt"])
-            )
           )
         )
 
@@ -1517,6 +1505,18 @@ service cloud.firestore {
                     "photoURL",
                     "bio"
                   ])
+            )
+
+            ||
+
+            (
+              !resource.data.keys().hasAll(["usernameUpdatedAt"])
+              && request.resource.data.username == resource.data.username
+              && request.resource.data.usernameUpdatedAt == request.time
+              && request.resource.data
+                  .diff(resource.data)
+                  .affectedKeys()
+                  .hasOnly(["usernameUpdatedAt"])
             )
           )
         )
