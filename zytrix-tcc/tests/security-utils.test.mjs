@@ -32,11 +32,10 @@ test('redes sociais respeitam allowlist de host', () => {
   assert.equal(safeSocialUrl('instagram', 'javascript:alert(1)'), '');
 });
 
-test('imagens ficam limitadas a CDNs conhecidas', () => {
-  assert.ok(safeImageUrl('https://lh3.googleusercontent.com/a/example'));
-  assert.ok(safeImageUrl('https://static-cdn.jtvnw.net/previews/example.jpg'));
-  assert.ok(safeImageUrl('https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg'));
-  assert.equal(safeImageUrl('https://tracker.example/pixel.png'), '');
+test('imagens aceitam HTTPS e bloqueiam protocolos inseguros', () => {
+  assert.equal(safeImageUrl('https://images.example.com/avatar.png'), 'https://images.example.com/avatar.png');
+  assert.equal(safeImageUrl('http://images.example.com/avatar.png'), '');
+  assert.equal(safeImageUrl('javascript:alert(1)'), '');
 });
 
 test('senha local exige ao menos 8 caracteres, letra e número', () => {
