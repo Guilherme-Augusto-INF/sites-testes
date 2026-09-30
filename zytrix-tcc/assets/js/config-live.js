@@ -8,14 +8,13 @@ footer();
 const root = document.querySelector('#config-root');
 let user = null;
 let stream = null;
-let channel = null;
 async function load() {
     const channelSnap = await getDoc(doc(db, 'channels', user.uid));
     if (!channelSnap.exists()) {
         root.innerHTML = '<div class="state">Sua conta ainda não é streamer.</div>';
         return;
     }
-    channel = channelSnap.data();
+    const channel = channelSnap.data();
     let streamId = channel.currentStreamId || '';
     if (!streamId) {
         const result = await getDocs(query(collection(db, 'streams'), where('streamerUid', '==', user.uid), limit(1)));
