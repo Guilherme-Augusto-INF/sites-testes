@@ -7,6 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Pathway+Gothic+One&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/header-auth.js" defer></script>
 </head>
 <body>
 <header class="topo">
@@ -19,7 +21,10 @@
       <a href="locais.html">Todos os locais</a><a href="arena-barueri.html">Arena Barueri</a><a href="parque-dom-jose.html">Parque Dom José</a><a href="kartodromo.html">Kartódromo</a><a href="praca-das-artes.html">Praça das Artes</a><a href="feira-noturna.html">Feira Noturna</a><a href="museu-da-biblia.html">Museu da Bíblia</a>
     </div></div>
   </nav>
-  <a class="user" href="login.html" title="Entrar">👤</a>
+  <div class="auth-actions" id="auth-actions">
+    <a class="auth-btn" href="login.html">Entrar</a>
+    <a class="auth-btn auth-register" href="cadastro.html">Registrar</a>
+  </div>
 </header>
 <main><section class="page local">
   <h2 class="faixa">Arena Barueri</h2>
